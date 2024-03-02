@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+// تعيين مسار workerSrc إلى ملف الـ worker المناسب
+import aa from './quran.pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+const App = () => {
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
 
-function App() {
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+  };
+
+  const goToPrevPage = () =>
+    setPageNumber(prevPageNumber => Math.max(prevPageNumber - 2, 1));
+
+  const goToNextPage = () =>
+    setPageNumber(prevPageNumber => Math.min(prevPageNumber + 2, numPages));
+
+  // تأكد من أن المسار إلى ملف PDF صحيح ومتوفر
+  // إذا كان ملف PDF في المجلد العام, يمكنك استخدام المسار المباشر إليه
+  const pdfFile = '/quran.pdf'; // تحديث المسار وفقًا لموقع ملف PDF في مشروعك
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+    <div>
+      
+
+      <Document
+        file={aa}
+        onLoadSuccess={onDocumentLoadSuccess}
+        // options={{ workerSrc: pdfjs.GlobalWorkerOptions.workerSrc }}
+      >
+        <p className='ssss'>
+        <Page pageNumber={pageNumber} />
+        <Page pageNumber={pageNumber+1} />
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </Document>
+      <div className='btnr'>
+
+        <button onClick={goToPrevPage}>Prev</button>
+        <button onClick={goToNextPage}>Next</button>
+        <p >
+          Page {pageNumber} of {numPages}
+        </p>
+      </div>
     </div>
   );
-}
+};
 
 export default App;

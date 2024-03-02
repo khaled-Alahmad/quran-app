@@ -6,8 +6,31 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.react-pdf__Page__textContent ,.react-pdf__Page__annotations{
+  display: none !important;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.ssss{
+  display: flex;
+  flex-direction: row-reverse;
+}
+button{
+  
+  background-color: teal;
+  color: #ffffff;
+  /* width: 2rem;
+  
+  height: 1rem; */
+  font-size: 1rem;
+  padding: 1rem;
+  margin: 1rem;
+}
+.btnr{
+  display: flex;
+
+}
+.btnr p{}
